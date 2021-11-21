@@ -1,0 +1,113 @@
+
+import { Request, Response } from "express";
+import { BaseController, ControllerRoute } from "./baseController";
+import { Validation } from "../middlewares/validation";
+import { ProductService } from "../services/product.service";
+
+export class ProductController extends BaseController {
+  private productService: ProductService;
+  private valid: Validation;
+
+  constructor(
+    productService: ProductService = new ProductService(),
+    valid: Validation = new Validation()
+  ) {
+    super();
+    this.path = "/products";
+    this.productService = productService;
+    this.valid = valid;
+  }
+
+  initRoutes(): ControllerRoute[] {
+    return [
+      {
+        path: "/",
+        method: "get",
+        handler: this.find,
+        middlewares: [],
+      },
+      {
+        path: "/:id",
+        method: "get",
+        handler: this.findOne,
+        middlewares: [],
+      },
+      {
+        path: "/",
+        method: "post",
+        handler: this.create,
+        middlewares: [],
+      },
+      {
+        path: "/:id",
+        method: "put",
+        handler: this.updateOne,
+        middlewares: [],
+      },
+    ];
+  }
+
+  async find(req: Request, res: Response): Promise<Response> {
+    try {
+      const result = await this.productService.find();
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
+
+  async findOne(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    try {
+      const result = await this.productService.findOne(id);
+      console.log(result);
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
+
+  async create(req: Request, res: Response): Promise<Response> {
+    try {
+      const result = await this.productService.create(req.body);
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
+
+  async updateOne(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    //console.log(id);
+    try {
+      const result = await this.productService.update(id, req.body);
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
+}
