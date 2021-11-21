@@ -44,6 +44,12 @@ export class ProductController extends BaseController {
         handler: this.updateOne,
         middlewares: [],
       },
+      {
+        path: "/:id",
+        method: "delete",
+        handler: this.deleteOne,
+        middlewares: [],
+      },
     ];
   }
 
@@ -99,6 +105,23 @@ export class ProductController extends BaseController {
     //console.log(id);
     try {
       const result = await this.productService.update(id, req.body);
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
+
+  async deleteOne(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    //console.log(id);
+    try {
+      const result = await this.productService.delete(id);
       return res.status(200).json({
         success: true,
         data: result,

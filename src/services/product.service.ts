@@ -49,6 +49,7 @@ export class ProductService implements IBaseService<IProduct> {
         await this.attributeService.delete(el);
       })
     );
+    await this.productRepo.delete(id);
   }
 
   async update(id: string, t: IProduct): Promise<IProduct> {
