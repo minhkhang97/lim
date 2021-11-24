@@ -78,9 +78,21 @@ export class ProductRepo implements IBaseRepo<IProduct> {
       data: {
         name: t.name,
         price: t.price,
+        subcategoryId: t.subCategoryId,
       }
     })
 
     return product;
+  }
+
+  async updateSubCategory(id: string, subCategoryId: string | null): Promise<any> {
+    const result = await this.model.update({
+      where: {
+        id,
+      },
+      data: {
+        subCategoryId,
+      }
+    })
   }
 }

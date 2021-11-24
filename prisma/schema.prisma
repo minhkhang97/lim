@@ -25,11 +25,29 @@ model User {
 }
 
 
+
+
+model Category {
+  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name String
+  subCategory Subcategory[]
+}
+
+model Subcategory {
+  id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name String
+  category   Category   @relation(fields: [categoryId], references: [id])
+  categoryId String @db.ObjectId
+  products Product[]
+}
+
 model Product {
   id    String @id @default(dbgenerated()) @map("_id") @db.ObjectId
   name String
   price Int
   attributes Attribute[]
+  subCategory   Subcategory?   @relation(fields: [subCategoryId], references: [id])
+  subCategoryId String? @db.ObjectId
 }
 
 model Attribute {
@@ -45,4 +63,10 @@ model Option {
   value String
   attribute   Attribute   @relation(fields: [attributeId], references: [id])
   attributeId String @db.ObjectId
+}
+
+
+model Lag {
+  id    String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  value String
 }

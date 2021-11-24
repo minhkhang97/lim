@@ -3,3 +3,9 @@ export interface IOption {
     value: string;
     attributeId: string;
 }
+
+export interface DTOOption {
+    readonly id: string;
+    value: string;
+    attributeId: string;
+}
