@@ -39,18 +39,18 @@ export class CategoryController extends BaseController {
         handler: this.create,
         middlewares: [],
       },
-    //   {
-    //     path: "/:id",
-    //     method: "put",
-    //     handler: this.updateOne,
-    //     middlewares: [],
-    //   },
-    //   {
-    //     path: "/:id",
-    //     method: "delete",
-    //     handler: this.deleteOne,
-    //     middlewares: [],
-    //   },
+      {
+        path: "/:id",
+        method: "put",
+        handler: this.updateOne,
+        middlewares: [],
+      },
+      {
+        path: "/:id",
+        method: "delete",
+        handler: this.deleteOne,
+        middlewares: [],
+      },
     ];
   }
 
@@ -101,37 +101,37 @@ export class CategoryController extends BaseController {
     }
   }
 
-//   async updateOne(req: Request, res: Response): Promise<Response> {
-//     const { id } = req.params;
-//     //console.log(id);
-//     try {
-//       const result = await this.categoryService.update(id, req.body);
-//       return res.status(200).json({
-//         success: true,
-//         data: result,
-//       });
-//     } catch (e) {
-//       return res.status(400).json({
-//         success: false,
-//         errors: e,
-//       });
-//     }
-//   }
+  async updateOne(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    //console.log(id);
+    try {
+      const result = await this.categoryService.update(id, req.body);
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
 
-//   async deleteOne(req: Request, res: Response): Promise<Response> {
-//     const { id } = req.params;
-//     //console.log(id);
-//     try {
-//       const result = await this.categoryService.delete(id);
-//       return res.status(200).json({
-//         success: true,
-//         data: result,
-//       });
-//     } catch (e) {
-//       return res.status(400).json({
-//         success: false,
-//         errors: e,
-//       });
-//     }
-//   }
+  async deleteOne(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    //console.log(id);
+    try {
+      const result = await this.categoryService.delete(id);
+      return res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (e) {
+      return res.status(400).json({
+        success: false,
+        errors: e,
+      });
+    }
+  }
 }
